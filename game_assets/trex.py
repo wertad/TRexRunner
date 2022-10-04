@@ -8,12 +8,19 @@ TREX_FRAMES = [
     pygame.image.load(get_resource_path("trex_run_01.png")).convert_alpha(),
     pygame.image.load(get_resource_path("trex_run_02.png")).convert_alpha()
 ]
+TREX_CROUNCH_FRAMES = [
+    pygame.image.load(get_resource_path("trex_crouched_01.png")).convert_alpha(),
+    pygame.image.load(get_resource_path("trex_crouched_02.png")).convert_alpha()
+]
 FRAME = 0
 ANIM_SPEED = 0.1
 GRAVITY = 0
 ON_GROUND = True
 TREX_IMAGE = TREX_FRAMES[FRAME]
+TREX_CROUNCH_IMAGE = TREX_CROUNCH_FRAMES[FRAME]
 TREX_RECT = TREX_IMAGE.get_rect(x=0, y=250)
+TREX_CROUNCH_RECT = TREX_CROUNCH_IMAGE.get_rect(x=0, y=300)
+
 
 
 def draw_trex(screen):
@@ -46,7 +53,18 @@ def jump():
 
     if not ON_GROUND:
         return
-
+    #todo: jumping animation
     GRAVITY -= 23
     JUMP_SOUND.play()
     ON_GROUND = False
+
+
+def crounch(screen):
+    global FRAME, TREX_CROUNCH_FRAMES
+
+    FRAME += ANIM_SPEED
+    if FRAME >= len(TREX_CROUNCH_FRAMES):
+        FRAME = 0
+
+    TREX_CROUNCH_FRAMES = TREX_CROUNCH_FRAMES[int(FRAME)]
+    screen.blit(TREX_CROUNCH_IMAGE, TREX_CROUNCH_RECT)

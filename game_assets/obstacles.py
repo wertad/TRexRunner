@@ -12,8 +12,7 @@ BIRD_FRAMES = [
 FRAME = 0
 ANIM_SPEED = 0.1
 BIRD_IMAGE = BIRD_FRAMES[FRAME]
-BIRD_X_POS = 1800
-BIRD_RECT = BIRD_IMAGE.get_rect(x=1800, y=120)
+BIRD_RECT = BIRD_IMAGE.get_rect(x=1800, y=200)
 
 
 def draw_cactus(screen):
@@ -35,16 +34,15 @@ def reset_cactus():
 
 
 def draw_bird(screen):
-    global FRAME, BIRD_X_POS, BIRD_IMAGE
+    global FRAME, BIRD_IMAGE
 
     if BIRD_RECT.right < 0:
         BIRD_RECT.left = 1800
 
-    screen.blit(BIRD_IMAGE, (BIRD_X_POS, 120))
-
-    BIRD_RECT.x -= GROUND_SPEED
+    BIRD_RECT.x -= BIRD_SPEED
     BIRD_IMAGE = BIRD_FRAMES[int(FRAME)]
-    BIRD_X_POS -= GROUND_SPEED
+
+    screen.blit(BIRD_IMAGE, BIRD_RECT)
 
     #pygame.draw.rect(screen, "red", BIRD_RECT, 4)
 
@@ -61,6 +59,5 @@ def get_bird_rect():
 
 
 def reset_bird():
-    global BIRD_X_POS, BIRD_RECT
-    BIRD_RECT = BIRD_IMAGE.get_rect(x=1800, y=120)
-    BIRD_X_POS = 1800
+    global BIRD_RECT
+    BIRD_RECT = BIRD_IMAGE.get_rect(x=1800, y=200)

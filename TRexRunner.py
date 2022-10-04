@@ -14,7 +14,7 @@ SCREEN = pygame.display.set_mode(size=WINDOW_SIZE)
 from game_assets.background import draw_background
 from game_assets.ground import draw_ground
 from game_assets.obstacles import *
-from game_assets.trex import draw_trex, jump, get_trex_rect
+from game_assets.trex import draw_trex, jump, crounch, get_trex_rect
 from game_assets.gameover_screen import draw_game_over_screen
 
 # set window title
@@ -44,7 +44,7 @@ def main():
 
                 # draw obstacles
                 draw_cactus(SCREEN)
-                #draw_bird(SCREEN)
+                draw_bird(SCREEN)
 
                 # draw T-Rex
                 draw_trex(SCREEN)
@@ -79,6 +79,12 @@ def main():
                 else:
                     jump()
 
+            # LCTRL event for crounch
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_LCTRL:
+                crounch(SCREEN)
+            #if event.type == pygame.KEYUP and event.key == pygame.K_LCTRL:
+             #   crounch(SCREEN)
+
 
     def check_collisions():
         global GAME_OVER
@@ -89,10 +95,10 @@ def main():
 
         # pygame.draw.rect(SCREEN, "red", trex_rect, 4)
 
-        if trex_rect.colliderect(cactus_rect): #or trex_rect.colliderect(bird_rect):
+        if trex_rect.colliderect(cactus_rect) or trex_rect.colliderect(bird_rect):
             GAME_OVER = True
             reset_cactus()
-            #reset_bird()
+            reset_bird()
 
     game_loop()
 
